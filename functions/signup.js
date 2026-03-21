@@ -78,7 +78,7 @@ exports.handler = async (event, context) => {
             'Authorization': `Bearer ${process.env.RESEND_API_KEY}`
           },
           body: JSON.stringify({
-            from: 'ScholarMatch <welcome@scholarmatch.io>',
+            from: 'ScholarMatch <neoreply@resend.dev>',
             to: email,
             subject: '🎓 Welcome to ScholarMatch!',
             html: `
