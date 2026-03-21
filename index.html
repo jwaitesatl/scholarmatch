@@ -35,8 +35,9 @@
         .form-group { display: flex; flex-direction: column; }
         .form-group.full-width { grid-column: 1 / -1; }
         .form-group label { font-weight: 500; margin-bottom: 0.5rem; color: var(--dark); font-size: 0.9rem; }
-        .form-group input, .form-group select { padding: 0.875rem 1rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; transition: border-color 0.2s; font-family: inherit; }
-        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--primary); }
+        .form-group input, .form-group select, .form-group textarea { padding: 0.875rem 1rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; transition: border-color 0.2s; font-family: inherit; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); }
+        .form-group textarea { resize: vertical; min-height: 100px; }
         .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.75rem; }
         .checkbox-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: #f8fafc; border-radius: 6px; }
         .checkbox-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); }
@@ -205,6 +206,10 @@
                     <input type="text" id="major" name="major" placeholder="Computer Science, Nursing, Business...">
                 </div>
                 <div class="form-group">
+                    <label for="school">Current School Name</label>
+                    <input type="text" id="school" name="school" placeholder="High School or College name...">
+                </div>
+                <div class="form-group">
                     <label for="citizenship">Citizenship Status</label>
                     <select id="citizenship" name="citizenship">
                         <option value="us">U.S. Citizen</option>
@@ -213,6 +218,10 @@
                         <option value="international">International Student</option>
                         <option value="refugee">Refugee / Asylee</option>
                     </select>
+                </div>
+                <div class="form-group full-width">
+                    <label for="story">Tell Us About Yourself 🎯</label>
+                    <textarea id="story" name="story" rows="4" placeholder="Sports you play, clubs you're in, service hours, family story, unique circumstances... anything that helps us find scholarships for YOU!"></textarea>
                 </div>
                 <div class="form-group full-width">
                     <label>Your Background & Story (check all that apply)</label>
@@ -360,6 +369,8 @@
                 gpa: parseFloat(document.getElementById('gpa')?.value) || 0,
                 year: document.getElementById('year_in_school')?.value || '',
                 major: document.getElementById('major')?.value || '',
+                school: document.getElementById('school')?.value || '',
+                story: document.getElementById('story')?.value || '',
                 citizenship: document.getElementById('citizenship')?.value || 'us',
                 background_categories: [],
                 email_consent: document.getElementById('email_consent')?.checked || false,
