@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScholarMatch - Find Scholarships You Actually Qualify For</title>
+    <meta name="description" content="Get personalized scholarship matches delivered to your inbox. Stop searching, start applying.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #6366f1; --primary-dark: #4f46e5; --secondary: #10b981; --dark: #1e293b; --light: #f8fafc; --gray: #64748b; --white: #ffffff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.6; color: var(--dark); background: var(--light); }
+        nav { background: var(--white); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); text-decoration: none; }
+        .logo span { color: var(--dark); }
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-links a { color: var(--gray); text-decoration: none; font-weight: 500; }
+        .btn { display: inline-block; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; font-size: 1rem; }
+        .btn-primary { background: var(--primary); color: var(--white); }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-secondary { background: var(--secondary); color: var(--white); }
+        .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: var(--white); padding: 5rem 2rem; text-align: center; }
+        .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1.5rem; line-height: 1.2; }
+        .hero p { font-size: 1.25rem; opacity: 0.95; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .hero-stats { display: flex; justify-content: center; gap: 3rem; margin-top: 3rem; }
+        .stat { text-align: center; }
+        .stat-number { font-size: 2.5rem; font-weight: 800; }
+        .stat-label { font-size: 0.9rem; opacity: 0.8; }
+        .signup-section { max-width: 900px; margin: -3rem auto 3rem; padding: 0 1rem; position: relative; z-index: 10; }
+        .signup-form { background: var(--white); border-radius: 16px; padding: 2.5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .form-header { text-align: center; margin-bottom: 2rem; }
+        .form-header h2 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+        .form-header p { color: var(--gray); }
+        .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-group label { font-weight: 500; margin-bottom: 0.5rem; color: var(--dark); font-size: 0.9rem; }
+        .form-group input, .form-group select { padding: 0.875rem 1rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; transition: border-color 0.2s; font-family: inherit; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--primary); }
+        .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.75rem; }
+        .checkbox-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: #f8fafc; border-radius: 6px; }
+        .checkbox-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); }
+        .checkbox-item label { margin-bottom: 0; font-size: 0.85rem; cursor: pointer; }
+        .submit-btn { grid-column: 1 / -1; background: var(--secondary); color: var(--white); font-size: 1.1rem; padding: 1rem; margin-top: 1rem; }
+        .features { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+        .features h2 { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .feature-card { background: var(--white); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .feature-icon { width: 50px; height: 50px; background: #e0e7ff; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 1.5rem; }
+        .feature-card h3 { margin-bottom: 0.75rem; font-size: 1.25rem; }
+        .feature-card p { color: var(--gray); }
+        .pricing { background: var(--white); padding: 5rem 2rem; }
+        .pricing-inner { max-width: 1000px; margin: 0 auto; }
+        .pricing h2 { text-align: center; font-size: 2.5rem; margin-bottom: 1rem; }
+        .pricing-subtitle { text-align: center; color: var(--gray); margin-bottom: 3rem; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .pricing-card { border: 2px solid #e2e8f0; border-radius: 16px; padding: 2rem; text-align: center; }
+        .pricing-card.featured { border-color: var(--primary); position: relative; }
+        .pricing-card.featured::before { content: 'Most Popular'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--primary); color: var(--white); padding: 0.25rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+        .pricing-card h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .price { font-size: 2.5rem; font-weight: 800; color: var(--primary); margin-bottom: 1rem; }
+        .price span { font-size: 1rem; color: var(--gray); font-weight: 400; }
+        .pricing-features { list-style: none; margin: 1.5rem 0; text-align: left; }
+        .pricing-features li { padding: 0.5rem 0; color: var(--gray); }
+        .pricing-features li::before { content: '✓'; color: var(--secondary); font-weight: 700; margin-right: 0.5rem; }
+        footer { background: var(--dark); color: var(--white); padding: 3rem 2rem; text-align: center; }
+        footer p { opacity: 0.7; }
+        .alert { padding: 1rem; border-radius: 8px; margin-bottom: 1rem; display: none; }
+        .alert-success { background: #d1fae5; color: #065f46; }
+        .results-modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+        .results-modal.active { display: flex; }
+        .results-content { background: white; border-radius: 16px; padding: 2rem; max-width: 600px; max-height: 80vh; overflow-y: auto; width: 90%; }
+        .results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .close-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+        .scholarship-item { background: #f8fafc; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+        .scholarship-item h4 { margin-bottom: 0.5rem; }
+        .scholarship-amount { color: var(--primary); font-weight: 700; font-size: 1.1rem; }
+        .scholarship-deadline { color: var(--gray); font-size: 0.9rem; }
+        .match-reason { background: #dbeafe; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; color: #1e40af; display: inline-block; margin-top: 0.5rem; margin-right: 0.25rem; }
+        @media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } .hero-stats { flex-direction: column; gap: 1.5rem; } .form-grid { grid-template-columns: 1fr; } .checkbox-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#" class="logo">Scholar<span>Match</span></a>
+        <div class="nav-links">
+            <a href="#features">How It Works</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#signup" class="btn btn-primary">Get Started</a>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <h1>Find Scholarships You Actually Qualify For</h1>
+        <p>Stop wasting hours searching. We match you with scholarships based on your unique story — background, experiences, and goals.</p>
+        <div class="hero-stats">
+            <div class="stat"><div class="stat-number">$6B+</div><div class="stat-label">Unclaimed Scholarships</div></div>
+            <div class="stat"><div class="stat-number">100K+</div><div class="stat-label">Active Scholarships</div></div>
+            <div class="stat"><div class="stat-number">2 min</div><div class="stat-label">To Sign Up</div></div>
+        </div>
+    </section>
+    
+    <section class="signup-section" id="signup">
+        <form class="signup-form" id="signupForm">
+            <div class="form-header">
+                <h2>Find Your Perfect Scholarship</h2>
+                <p>The more you tell us, the better your matches!</p>
+            </div>
+            
+            <div class="alert alert-success" id="successAlert">Welcome! We found <span id="matchCount">0</span> scholarships just for you!</div>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" placeholder="jane@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number 📱</label>
+                    <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
+                </div>
+                <div class="form-group">
+                    <label for="state">State of Residence *</label>
+                    <select id="state" name="state" required>
+                        <option value="">Select...</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="FL">Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                        <option value="DC">Washington D.C.</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="gpa">Current GPA (weighted) *</label>
+                    <input type="number" id="gpa" name="gpa" step="0.01" min="0" max="5.0" placeholder="3.5 - up to 5.0 for weighted!" required>
+                </div>
+                <div class="form-group">
+                    <label for="year_in_school">Current Grade/Year *</label>
+                    <select id="year_in_school" name="year_in_school" required>
+                        <option value="">Select...</option>
+                        <option value="8th">8th Grade</option>
+                        <option value="freshman">High School Freshman (9th)</option>
+                        <option value="sophomore">High School Sophomore (10th)</option>
+                        <option value="junior">High School Junior (11th)</option>
+                        <option value="senior">High School Senior (12th)</option>
+                        <option value="college_freshman">College Freshman</option>
+                        <option value="college_sophomore">College Sophomore</option>
+                        <option value="college_junior">College Junior</option>
+                        <option value="college_senior">College Senior</option>
+                        <option value="graduate">Graduate Student</option>
+                        <option value="adult">Adult Learner</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="major">Intended Major / Career Goal</label>
+                    <input type="text" id="major" name="major" placeholder="Computer Science, Nursing, Business...">
+                </div>
+                <div class="form-group">
+                    <label for="citizenship">Citizenship Status</label>
+                    <select id="citizenship" name="citizenship">
+                        <option value="us">U.S. Citizen</option>
+                        <option value="permanent_resident">Permanent Resident</option>
+                        <option value="DACA">DACA / Dreamer</option>
+                        <option value="international">International Student</option>
+                        <option value="refugee">Refugee / Asylee</option>
+                    </select>
+                </div>
+                <div class="form-group full-width">
+                    <label>Your Background & Story (check all that apply)</label>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item"><input type="checkbox" id="first_generation" name="first_generation"><label for="first_generation">🎓 First-generation college student</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="low_income" name="low_income"><label for="low_income">💰 Low-income / Pell Grant eligible</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="veteran" name="veteran"><label for="veteran">🎖️ Veteran / Active Duty</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="military_family" name="military_family"><label for="military_family">🛡️ Military family</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="law_enforcement" name="law_enforcement"><label for="law_enforcement">👮 Child of law enforcement</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="firefighter" name="firefighter"><label for="firefighter">🔥 Child of firefighter/EMT</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="cancer_survivor" name="cancer_survivor"><label for="cancer_survivor">💪 Cancer survivor (you/family)</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="chronic_illness" name="chronic_illness"><label for="chronic_illness">🏥 Chronic illness / disability</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="foster_care" name="foster_care"><label for="foster_care">🏠 Foster care / aged out</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="homeless" name="homeless"><label for="homeless">🏚️ Homeless / at risk</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="single_parent" name="single_parent"><label for="single_parent">👶 Single parent student</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="lgbtq" name="lgbtq"><label for="lgbtq">🌈 LGBTQ+ student</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="minority" name="minority"><label for="minority">🌍 Minority / underrepresented</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="rural" name="rural"><label for="rural">🌾 Rural / small town</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="adopted" name="adopted"><label for="adopted">👼 Adopted / ward of court</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="religious" name="religious"><label for="religious">⛪ Religious affiliation</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="rotary" name="rotary"><label for="rotary">🔔 Rotary / Lions / Kiwanis</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="jci" name="jci"><label for="jci">🌟 JCI member</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="4h" name="4h"><label for="4h">🤠 4-H member</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="fbla" name="fbla"><label for="fbla">💼 FBLA / DECA / SkillsUSA</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="sports" name="sports"><label for="sports">⚽ Athlete</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="arts" name="arts"><label for="arts">🎨 Arts / music / creative</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="community_service" name="community_service"><label for="community_service">❤️ Strong community service</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="work_study" name="work_study"><label for="work_study">💼 Work-study / part-time job</label></div>
+                    </div>
+                </div>
+                <div class="form-group full-width" style="margin-top: 0.5rem;">
+                    <label class="checkbox-item" style="background: #fff3cd;">
+                        <input type="checkbox" id="age_consent" name="age_consent" required>
+                        <label for="age_consent" style="font-size: 0.85rem; margin-bottom: 0;">I am at least 13 years old and agree to the <a href="/privacy.html" target="_blank" style="color: #6366f1;">Privacy Policy</a> and <a href="/terms.html" target="_blank" style="color: #6366f1;">Terms of Service</a></label>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn submit-btn">Find My Scholarships →</button>
+            </div>
+        </form>
+    </section>
+    
+    <section class="features" id="features">
+        <h2>How ScholarMatch Works</h2>
+        <div class="feature-grid">
+            <div class="feature-card"><div class="feature-icon">📝</div><h3>Create Your Profile</h3><p>Tell us your unique story. The more we know, the better your matches.</p></div>
+            <div class="feature-card"><div class="feature-icon">🔍</div><h3>We Do the Hunting</h3><p>We search 100K+ scholarships daily for ones that match YOUR specific situation.</p></div>
+            <div class="feature-card"><div class="feature-icon">📧</div><h3>Get Matches Daily</h3><p>New scholarships delivered to your inbox.</p></div>
+            <div class="feature-card"><div class="feature-icon">🎯</div><h3>Apply & Win</h3><p>Focus on scholarships where you actually qualify.</p></div>
+            <div class="feature-card"><div class="feature-icon">⏰</div><h3>Never Miss a Deadline</h3><p>SMS & email reminders so you never miss out.</p></div>
+            <div class="feature-card"><div class="feature-icon">🔒</div><h3>Your Data is Safe</h3><p>We never sell your data. Privacy first, always.</p></div>
+        </div>
+    </section>
+    
+    <section class="pricing" id="pricing">
+        <div class="pricing-inner">
+            <h2>Simple Pricing</h2>
+            <p class="pricing-subtitle">Start free, upgrade when ready</p>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Free</h3>
+                    <div class="price">$0</div>
+                    <ul class="pricing-features"><li>5 matches/month</li><li>Email delivery</li></ul>
+                    <a href="#signup" class="btn btn-primary" style="width:100%">Sign Up Free</a>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Premium</h3>
+                    <div class="price">$9.99<span>/mo</span></div>
+                    <ul class="pricing-features"><li>Unlimited matches</li><li>SMS reminders</li><li>Essay tips</li></ul>
+                    <a href="#signup" class="btn btn-secondary" style="width:100%">Get Premium</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Complete</h3>
+                    <div class="price">$49.99</div>
+                    <ul class="pricing-features"><li>Everything in Premium</li><li>1-on-1 review</li><li>Essay editing</li></ul>
+                    <a href="#signup" class="btn btn-primary" style="width:100%">Get Complete</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p>&copy; 2026 ScholarMatch. All rights reserved.</p>
+        <p style="margin-top: 1rem; font-size: 0.85rem;">
+            <a href="/privacy.html" style="color: #aaa; text-decoration: none; margin: 0 0.5rem;">Privacy Policy</a> | 
+            <a href="/terms.html" style="color: #aaa; text-decoration: none; margin: 0 0.5rem;">Terms of Service</a> | 
+            <span style="color: #666;">We do not guarantee scholarship awards. We help you find opportunities.</span>
+        </p>
+    </footer>
+    
+    <div class="results-modal" id="resultsModal">
+        <div class="results-content">
+            <div class="results-header">
+                <h3>🎓 Your Scholarship Matches!</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="resultsList"></div>
+            <p style="margin-top:1rem;color:var(--gray);font-size:0.9rem;">Check your email for more matches daily!</p>
+        </div>
+    </div>
+    
+    <script>
+        const scholarships = [
+            {name: 'Coca-Cola Scholars Foundation', amount: 20000, deadline: '2026-10-31', major: 'any', minGpa: 3.0, cats: ['community_service'], desc: 'Achievement-based for HS seniors.'},
+            {name: 'Bill Gates Scholarship', amount: 10000, deadline: '2026-04-15', major: 'any', minGpa: 3.5, cats: ['low_income', 'first_generation'], desc: 'For high-achieving students with financial need.'},
+            {name: 'Jack Kent Cooke Foundation', amount: 40000, deadline: '2026-11-01', major: 'any', minGpa: 3.5, cats: ['low_income'], desc: 'For high-achieving students.'},
+            {name: 'First Generation Grant', amount: 5000, deadline: '2026-04-15', major: 'any', minGpa: 2.5, cats: ['first_generation', 'low_income'], desc: 'Supporting first-gen students.'},
+            {name: 'AIME Foster Youth', amount: 10000, deadline: '2026-03-31', major: 'any', minGpa: 0, cats: ['foster_care', 'homeless'], desc: 'For foster youth.'},
+            {name: 'Marine Corps Scholarship', amount: 5000, deadline: '2026-04-01', major: 'any', minGpa: 2.5, cats: ['veteran', 'military_family'], desc: 'For military families.'},
+            {name: 'Pat Tillman Scholarship', amount: 10000, deadline: '2026-03-31', major: 'any', minGpa: 2.5, cats: ['veteran', 'military_family'], desc: 'For veterans.'},
+            {name: 'FOP Law Enforcement', amount: 2500, deadline: '2026-06-01', major: 'any', minGpa: 2.5, cats: ['law_enforcement'], desc: 'For children of law enforcement.'},
+            {name: 'Firefighter Scholarship', amount: 5000, deadline: '2026-04-15', major: 'any', minGpa: 2.5, cats: ['firefighter'], desc: 'For firefighter families.'},
+            {name: 'Cancer Survivor Scholarship', amount: 10000, deadline: '2026-04-01', major: 'any', minGpa: 2.5, cats: ['cancer_survivor'], desc: 'For cancer survivors.'},
+            {name: 'Leukemia Lymphoma Society', amount: 5000, deadline: '2026-05-01', major: 'any', minGpa: 2.5, cats: ['cancer_survivor', 'chronic_illness'], desc: 'For blood cancer affected.'},
+            {name: 'Foster Care Success', amount: 5000, deadline: '2026-04-01', major: 'any', minGpa: 2.0, cats: ['foster_care', 'adopted'], desc: 'For foster care students.'},
+            {name: 'Google Lime Scholarship', amount: 10000, deadline: '2026-12-01', major: 'Computer Science', minGpa: 3.0, cats: ['chronic_illness'], desc: 'For CS students with disabilities.'},
+            {name: 'Women in STEM', amount: 5000, deadline: '2026-05-01', major: 'STEM', minGpa: 3.0, cats: ['minority'], desc: 'Supporting women in STEM.'},
+            {name: 'Cybersecurity Scholarship', amount: 10000, deadline: '2026-07-01', major: 'Cybersecurity', minGpa: 3.0, cats: ['veteran'], desc: 'For cybersecurity students.'},
+            {name: 'Hispanic Scholarship Fund', amount: 5000, deadline: '2026-04-15', major: 'any', minGpa: 2.5, cats: ['minority'], desc: 'For Hispanic students.'},
+            {name: 'UNCF Scholarship', amount: 5000, deadline: '2026-04-15', major: 'any', minGpa: 2.5, cats: ['minority'], desc: 'For African American students.'},
+            {name: 'Ron Brown Scholarship', amount: 10000, deadline: '2026-01-15', major: 'any', minGpa: 2.5, cats: ['minority', 'first_generation'], desc: 'For African American seniors.'},
+            {name: 'Pride Foundation', amount: 5000, deadline: '2026-04-01', major: 'any', minGpa: 2.5, cats: ['lgbtq', 'homeless'], desc: 'For LGBTQ+ students.'},
+            {name: 'Live Out Loud', amount: 5000, deadline: '2026-06-01', major: 'any', minGpa: 2.5, cats: ['lgbtq'], desc: 'For LGBTQ+ youth.'},
+            {name: 'Future Nurses', amount: 5000, deadline: '2026-05-15', major: 'Nursing', minGpa: 3.0, cats: ['minority'], desc: 'For nursing students.'},
+            {name: 'Business Leaders', amount: 7500, deadline: '2026-04-30', major: 'Business', minGpa: 3.2, cats: ['fbla', 'community_service'], desc: 'For business majors.'},
+            {name: 'Rural Student Scholarship', amount: 3000, deadline: '2026-05-15', major: 'any', minGpa: 2.5, cats: ['rural'], desc: 'For rural students.'},
+            {name: 'Single Parent Grant', amount: 5000, deadline: '2026-04-30', major: 'any', minGpa: 2.0, cats: ['single_parent', 'low_income'], desc: 'For single parents.'},
+            {name: '4-H Scholarship', amount: 2500, deadline: '2026-03-01', major: 'any', minGpa: 2.5, cats: ['4h', 'community_service'], desc: 'For 4-H members.'},
+            {name: 'FBLA Scholarship', amount: 3000, deadline: '2026-04-01', major: 'Business', minGpa: 2.5, cats: ['fbla'], desc: 'For FBLA members.'},
+            {name: 'Athletes Impact', amount: 5000, deadline: '2026-06-01', major: 'any', minGpa: 2.5, cats: ['sports', 'community_service'], desc: 'For student athletes.'},
+            {name: 'Arts Excellence', amount: 10000, deadline: '2026-04-01', major: 'Arts', minGpa: 2.5, cats: ['arts', 'community_service'], desc: 'For arts students.'},
+            {name: 'Community Service Award', amount: 5000, deadline: '2026-05-01', major: 'any', minGpa: 2.5, cats: ['community_service', 'first_generation'], desc: 'For dedicated volunteers.'},
+            {name: 'DACA Student Grant', amount: 5000, deadline: '2026-04-15', major: 'any', minGpa: 2.5, cats: ['DACA'], desc: 'For DACA students.'},
+        ];
+        
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name')?.value || '',
+                email: document.getElementById('email')?.value || '',
+                phone: document.getElementById('phone')?.value || '',
+                state: document.getElementById('state')?.value || '',
+                gpa: parseFloat(document.getElementById('gpa')?.value) || 0,
+                year: document.getElementById('year_in_school')?.value || '',
+                major: document.getElementById('major')?.value || '',
+                citizenship: document.getElementById('citizenship')?.value || 'us',
+                background_categories: [],
+                email_consent: document.getElementById('email_consent')?.checked || false,
+                sms_consent: document.getElementById('sms_consent')?.checked || false
+            };
+            
+            // Get checked categories
+            document.querySelectorAll('.checkbox-item input:checked').forEach(cb => {
+                formData.background_categories.push(cb.name);
+            });
+            
+            // For demo: show matches locally (until API is connected)
+            const gpa = formData.gpa;
+            const major = formData.major.toLowerCase();
+            
+            const matches = scholarships.filter(s => {
+                if (s.minGpa > gpa) return false;
+                if (s.major !== 'any' && major && !s.major.toLowerCase().includes(major) && major !== '') return false;
+                return true;
+            }).map(s => {
+                let score = 50;
+                const matchedCats = s.cats.filter(c => formData.background_categories.includes(c));
+                if (matchedCats.length > 0) {
+                    score += matchedCats.length * 20;
+                    s.reasons = matchedCats;
+                }
+                s.score = score;
+                return s;
+            }).sort((a, b) => b.score - a.score);
+            
+            // Show success
+            document.getElementById('matchCount').textContent = matches.length;
+            document.getElementById('successAlert').style.display = 'block';
+            
+            const resultsList = document.getElementById('resultsList');
+            resultsList.innerHTML = matches.slice(0,8).map(m => `
+                <div class="scholarship-item">
+                    <h4>${m.name}</h4>
+                    <div class="scholarship-amount">$${m.amount.toLocaleString()}</div>
+                    <div class="scholarship-deadline">Deadline: ${m.deadline}</div>
+                    <p style="font-size:0.9rem;color:var(--gray);margin:0.5rem 0;">${m.desc}</p>
+                    ${m.reasons ? m.reasons.map(r => `<span class="match-reason">${r.replace('_', ' ')}</span>`).join('') : ''}
+                </div>
+            `).join('');
+            
+            document.getElementById('resultsModal').classList.add('active');
+            
+            // Try to send to API (for production), fall back to local demo
+            fetch('/api/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log('API Response:', data);
+            })
+            .catch(err => {
+                console.log('API not connected yet (demo mode):', err);
+            });
+            
+            console.log('Signup data:', formData);
+        });
+        
+        function closeModal() {
+            document.getElementById('resultsModal').classList.remove('active');
+        }
+        
+        document.getElementById('resultsModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+    </script>
+</body>
+</html>

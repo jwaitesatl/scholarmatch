@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScholarMatch - Find Scholarships You Actually Qualify For</title>
+    <meta name="description" content="Get personalized scholarship matches delivered to your inbox. Stop searching, start applying.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+        }
+        
+        /* Navbar */
+        nav {
+            background: var(--white);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo span {
+            color: var(--dark);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--white);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Signup Section */
+        .signup-section {
+            max-width: 900px;
+            margin: -3rem auto 3rem;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .signup-form {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .form-header h2 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-header p {
+            color: var(--gray);
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-group label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+        
+        .form-group input,
+        .form-group select {
+            padding: 0.875rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+            font-family: inherit;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .form-group input::placeholder {
+            color: #94a3b8;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+        }
+        
+        .checkbox-item label {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+        }
+        
+        .submit-btn {
+            grid-column: 1 / -1;
+            background: var(--secondary);
+            color: var(--white);
+            font-size: 1.1rem;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .submit-btn:hover {
+            background: #059669;
+        }
+        
+        /* Features */
+        .features {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: #e0e7ff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
+        }
+        
+        .feature-card p {
+            color: var(--gray);
+        }
+        
+        /* Pricing */
+        .pricing {
+            background: var(--white);
+            padding: 5rem 2rem;
+        }
+        
+        .pricing-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .pricing h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .pricing-subtitle {
+            text-align: center;
+            color: var(--gray);
+            margin-bottom: 3rem;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .pricing-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .pricing-card.featured {
+            border-color: var(--primary);
+            position: relative;
+        }
+        
+        .pricing-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .price span {
+            font-size: 1rem;
+            color: var(--gray);
+            font-weight: 400;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+        
+        .pricing-features li {
+            padding: 0.5rem 0;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--secondary);
+            font-weight: 700;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        footer p {
+            opacity: 0.7;
+        }
+        
+        /* Alerts */
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="/" class="logo">Scholar<span>Match</span></a>
+        <div class="nav-links">
+            <a href="#features">How It Works</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#signup" class="btn btn-primary">Get Started</a>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Find Scholarships You Actually Qualify For</h1>
+            <p>Stop wasting hours searching. We match you with scholarships based on your unique profile — GPA, major, background, and more.</p>
+            
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number">$6B</div>
+                    <div class="stat-label">Unclaimed Scholarships</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">Active Scholarships</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">2 min</div>
+                    <div class="stat-label">To Sign Up</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Signup Section -->
+    <section class="signup-section" id="signup">
+        <form class="signup-form" action="/signup" method="POST">
+            <div class="form-header">
+                <h2>Find Your Perfect Scholarship</h2>
+                <p>It takes 2 minutes. Get matched instantly.</p>
+            </div>
+            
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" placeholder="jane@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
+                </div>
+                
+                <div class="form-group">
+                    <label for="zip_code">ZIP Code *</label>
+                    <input type="text" id="zip_code" name="zip_code" placeholder="30303" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="gpa">Current GPA *</label>
+                    <input type="number" id="gpa" name="gpa" step="0.01" min="0" max="4.0" placeholder="3.5" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="year_in_school">Year in School *</label>
+                    <select id="year_in_school" name="year_in_school" required>
+                        <option value="">Select...</option>
+                        <option value="freshman">High School Senior</option>
+                        <option value="freshman">College Freshman</option>
+                        <option value="sophomore">College Sophomore</option>
+                        <option value="junior">College Junior</option>
+                        <option value="senior">College Senior</option>
+                        <option value="graduate">Graduate Student</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="major">Intended Major</label>
+                    <input type="text" id="major" name="major" placeholder="Computer Science, Business, Nursing...">
+                </div>
+                
+                <div class="form-group">
+                    <label for="citizenship">Citizenship</label>
+                    <select id="citizenship" name="citizenship">
+                        <option value="us">U.S. Citizen</option>
+                        <option value="permanent_resident">Permanent Resident</option>
+                        <option value="international">International Student</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="sat_score">SAT Score (optional)</label>
+                    <input type="number" id="sat_score" name="sat_score" min="400" max="1600" placeholder="1400">
+                </div>
+                
+                <div class="form-group">
+                    <label for="act_score">ACT Score (optional)</label>
+                    <input type="number" id="act_score" name="act_score" min="1" max="36" placeholder="32">
+                </div>
+                
+                <div class="form-group full-width">
+                    <label>Additional Info (optional)</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="first_generation" name="first_generation">
+                            <label for="first_generation">First-generation college student</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="veteran" name="veteran">
+                            <label for="veteran">Veteran</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="disability" name="disability">
+                            <label for="disability">Have a disability</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="income_bracket">Family Income Bracket</label>
+                    <select id="income_bracket" name="income_bracket">
+                        <option value="">Prefer not to say</option>
+                        <option value="under_30k">Under $30,000</option>
+                        <option value="30k_60k">$30,000 - $60,000</option>
+                        <option value="60k_100k">$60,000 - $100,000</option>
+                        <option value="over_100k">Over $100,000</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ethnicity">Ethnicity (optional)</label>
+                    <select id="ethnicity" name="ethnicity">
+                        <option value="">Prefer not to say</option>
+                        <option value="asian">Asian</option>
+                        <option value="black">Black/African American</option>
+                        <option value="hispanic">Hispanic/Latino</option>
+                        <option value="native">Native American</option>
+                        <option value="pacific">Pacific Islander</option>
+                        <option value="white">White/Caucasian</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn submit-btn">Find My Scholarships →</button>
+            </div>
+        </form>
+    </section>
+    
+    <!-- Features -->
+    <section class="features" id="features">
+        <h2>How ScholarMatch Works</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📝</div>
+                <h3>Create Your Profile</h3>
+                <p>Tell us about your GPA, major, background, and goals. Takes just 2 minutes.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>We Do the Hunting</h3>
+                <p>Our system searches thousands of scholarships daily to find your perfect matches.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📧</div>
+                <h3>Get Matches Daily</h3>
+                <p>Receive personalized scholarship matches delivered to your inbox every day.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Apply & Win</h3>
+                <p>Focus on scholarships you qualify for. Higher chances of winning means more money.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">⏰</div>
+                <h3>Never Miss a Deadline</h3>
+                <p>We send reminders before scholarship deadlines so you never miss an opportunity.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Your Data is Safe</h3>
+                <p>We never sell your data. Your privacy is our top priority.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <div class="pricing-inner">
+            <h2>Simple, Transparent Pricing</h2>
+            <p class="pricing-subtitle">Start free, upgrade when you're ready</p>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Free</h3>
+                    <div class="price">$0</div>
+                    <ul class="pricing-features">
+                        <li>5 scholarship matches/month</li>
+                        <li>Email delivery</li>
+                        <li>Basic filtering</li>
+                        <li>Deadline reminders</li>
+                    </ul>
+                    <a href="#signup" class="btn btn-primary" style="width: 100%;">Sign Up Free</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <h3>Premium</h3>
+                    <div class="price">$9.99<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>Unlimited matches</li>
+                        <li>Priority delivery</li>
+                        <li>Essay tips & resources</li>
+                        <li>Application tracking</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <a href="#signup" class="btn btn-secondary" style="width: 100%;">Get Premium</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>Complete</h3>
+                    <div class="price">$49.99</div>
+                    <ul class="pricing-features">
+                        <li>Everything in Premium</li>
+                        <li>1-on-1 application review</li>
+                        <li>Essay editing feedback</li>
+                        <li>Interview prep</li>
+                        <li>Direct mentor access</li>
+                    </ul>
+                    <a href="#signup" class="btn btn-primary" style="width: 100%;">Get Complete</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 ScholarMatch. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Coca-Cola Scholars Foundation",
+    "amount": 20000,
+    "deadline": "2026-10-31",
+    "description": "Achievement-based scholarship",
+    "major": "any",
+    "min_gpa": 3.0
+  },
+  {
+    "name": "Google Lime Scholarship",
+    "amount": 10000,
+    "deadline": "2026-12-01",
+    "description": "For CS students with disabilities",
+    "major": "Computer Science",
+    "min_gpa": 3.0
+  },
+  {
+    "name": "Women in STEM Scholarship",
+    "amount": 5000,
+    "deadline": "2026-05-01",
+    "description": "Supporting women in engineering",
+    "major": "STEM",
+    "min_gpa": 3.0
+  },
+  {
+    "name": "Hispanic Scholarship Fund",
+    "amount": 5000,
+    "deadline": "2026-04-15",
+    "description": "For Hispanic students",
+    "major": "any",
+    "min_gpa": 2.5
+  },
+  {
+    "name": "Bill Gates Scholarship",
+    "amount": 10000,
+    "deadline": "2026-04-15",
+    "description": "For high-achieving students",
+    "major": "any",
+    "min_gpa": 3.5
+  }
+]
