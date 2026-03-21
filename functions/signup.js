@@ -2,7 +2,6 @@
 // Netlify Function
 
 const { neon } = require('@neondatabase/serverless');
-const fetch = require('node-fetch');
 
 exports.handler = async (event, context) => {
   // CORS headers
@@ -71,6 +70,7 @@ exports.handler = async (event, context) => {
     // Send welcome email via Resend
     if (process.env.RESEND_API_KEY) {
       try {
+        const fetch = globalThis.fetch;
         await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
