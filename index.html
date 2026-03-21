@@ -408,7 +408,7 @@
             document.getElementById('resultsModal').classList.add('active');
             
             // Try to send to API (for production), fall back to local demo
-            fetch('/api/signup', {
+            fetch('/.netlify/functions/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
