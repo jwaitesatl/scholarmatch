@@ -2,6 +2,7 @@
 // Netlify Function
 
 const { neon } = require('@neondatabase/serverless');
+const fetch = require('node-fetch');
 
 exports.handler = async (event, context) => {
   // CORS headers
@@ -66,6 +67,43 @@ exports.handler = async (event, context) => {
     `;
     
     const user = result[0];
+    
+    // Send welcome email via Resend
+    if (process.env.RESEND_API_KEY) {
+      try {
+        await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.RESEND_API_KEY}`
+          },
+          body: JSON.stringify({
+            from: 'ScholarMatch <welcome@scholarmatch.io>',
+            to: email,
+            subject: '🎓 Welcome to ScholarMatch!',
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h1 style="color: #6366f1;">🎓 Welcome to ScholarMatch!</h1>
+                <p>Hi ${name || 'there'}!</p>
+                <p>Thanks for signing up! We're excited to help you find scholarships.</p>
+                <p><strong>What happens next:</strong></p>
+                <ul>
+                  <li>We'll match you with scholarships based on your profile</li>
+                  <li>Check your email for new scholarship opportunities</li>
+                  <li>Upgrade to Premium for unlimited matches</li>
+                </ul>
+                <p>Ready to find your scholarships?</p>
+                <a href="https://scholarmatch.io" style="background: #6366f1; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px;">View My Matches</a>
+                <hr>
+                <p style="color: #666; font-size: 12px;">© 2026 ScholarMatch. No guarantees on scholarship awards.</p>
+              </div>
+            `
+          })
+        });
+      } catch (emailErr) {
+        console.log('Email send error:', emailErr.message);
+      }
+    }
     
     // Log consent if given
     if (email_consent) {
