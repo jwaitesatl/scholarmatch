@@ -69,9 +69,10 @@ exports.handler = async (event, context) => {
     
     // Send welcome email via Resend
     if (process.env.RESEND_API_KEY) {
+      console.log('RESEND_API_KEY is set, attempting to send email...');
       try {
         const fetch = globalThis.fetch;
-        await fetch('https://api.resend.com/emails', {
+        const emailResult = await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -100,9 +101,13 @@ exports.handler = async (event, context) => {
             `
           })
         });
+        const emailData = await emailResult.json();
+        console.log('Resend response:', emailData);
       } catch (emailErr) {
         console.log('Email send error:', emailErr.message);
       }
+    } else {
+      console.log('RESEND_API_KEY is NOT set');
     }
     
     // Log consent if given
