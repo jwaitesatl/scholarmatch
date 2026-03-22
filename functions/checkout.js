@@ -28,12 +28,12 @@ exports.handler = async (event, context) => {
     // Define prices for each tier
     const prices = {
       premium: {
-        amount: 999, // $9.99 one-time
+        priceId: 'price_1TDbJTEuOht0SBkLkXLfhjt3', // $9.99/month
         name: 'ScholarMatch Premium',
         description: 'Unlimited scholarship matches + email alerts'
       },
       complete: {
-        amount: 4999, // $49.99 one-time
+        priceId: 'price_1TDbKFEuOht0SBkLW1WNr0Nu', // $49.99/month
         name: 'ScholarMatch Complete',
         description: 'Everything in Premium + essay review + 1-on-1 coaching'
       }
@@ -49,18 +49,11 @@ exports.handler = async (event, context) => {
       payment_method_types: ['card'],
       line_items: [
         {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: selectedTier.name,
-              description: selectedTier.description,
-            },
-            unit_amount: selectedTier.amount,
-          },
+          price: selectedTier.priceId,
           quantity: 1,
         },
       ],
-      mode: 'payment',
+      mode: 'subscription',
       success_url: `${process.env.URL || 'https://scholarmatch.io'}/success.html?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.URL || 'https://scholarmatch.io'}/cancel.html`,
       customer_email: email,
