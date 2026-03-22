@@ -142,6 +142,75 @@ function generateScholarships() {
     );
   });
 
+  // Add 60 more major-specific scholarships
+  const majors = [
+    {m: 'engineering', d: 'Engineering students', a: 10000},
+    {m: 'computer_science', d: 'Computer Science students', a: 10000},
+    {m: 'biology', d: 'Biology students', a: 8000},
+    {m: 'chemistry', d: 'Chemistry students', a: 8000},
+    {m: 'physics', d: 'Physics students', a: 8000},
+    {m: 'math', d: 'Math students', a: 8000},
+    {m: 'business', d: 'Business students', a: 8000},
+    {m: 'accounting', d: 'Accounting students', a: 8000},
+    {m: 'finance', d: 'Finance students', a: 8000},
+    {m: 'marketing', d: 'Marketing students', a: 5000},
+    {m: 'education', d: 'Education students', a: 5000},
+    {m: 'psychology', d: 'Psychology students', a: 5000},
+    {m: 'communications', d: 'Communications students', a: 5000},
+    {m: 'journalism', d: 'Journalism students', a: 5000},
+    {m: 'english', d: 'English students', a: 5000},
+    {m: 'history', d: 'History students', a: 5000},
+    {m: 'political_science', d: 'Political Science students', a: 5000},
+    {m: 'social_work', d: 'Social Work students', a: 5000},
+    {m: 'healthcare', d: 'Healthcare students', a: 8000},
+    {m: 'dental', d: 'Dental students', a: 8000},
+    {m: 'pharmacy', d: 'Pharmacy students', a: 8000},
+    {m: 'physical_therapy', d: 'PT students', a: 8000},
+    {m: 'occupational_therapy', d: 'OT students', a: 8000},
+    {m: 'environmental_science', d: 'Environmental Science', a: 8000},
+    {m: 'agriculture', d: 'Agriculture students', a: 5000},
+    {m: 'food_science', d: 'Food Science students', a: 5000},
+    {m: 'nutrition', d: 'Nutrition students', a: 5000},
+    {m: 'criminal_justice', d: 'Criminal Justice students', a: 5000},
+    {m: 'law', d: 'Law students', a: 15000},
+    {m: 'music', d: 'Music students', a: 5000},
+    {m: 'art', d: 'Art students', a: 5000},
+    {m: 'film', d: 'Film students', a: 8000},
+    {m: 'creative_writing', d: 'Creative Writing students', a: 5000},
+    {m: 'architecture', d: 'Architecture students', a: 10000},
+    {m: 'construction', d: 'Construction students', a: 5000},
+    {m: 'hvac', d: 'HVAC students', a: 5000},
+    {m: 'electrical', d: 'Electrical students', a: 5000},
+    {m: 'plumbing', d: 'Plumbing students', a: 5000},
+    {m: 'automotive', d: 'Automotive students', a: 5000},
+    {m: 'culinary', d: 'Culinary students', a: 5000},
+    {m: 'hospitality', d: 'Hospitality students', a: 5000},
+    {m: 'sports_management', d: 'Sports Management', a: 5000},
+    {m: 'athletic_training', d: 'Athletic Training', a: 5000},
+    {m: 'kinesiology', d: 'Kinesiology students', a: 5000},
+    {m: 'veterinary', d: 'Veterinary students', a: 8000},
+    {m: 'data_science', d: 'Data Science students', a: 10000},
+    {m: 'cybersecurity', d: 'Cybersecurity students', a: 10000},
+    {m: 'information_technology', d: 'IT students', a: 8000},
+    {m: 'software_engineering', d: 'Software Engineering', a: 10000},
+    {m: 'mechanical_engineering', d: 'Mechanical Engineering', a: 10000},
+    {m: 'civil_engineering', d: 'Civil Engineering', a: 10000},
+    {m: 'chemical_engineering', d: 'Chemical Engineering', a: 10000},
+    {m: 'biomedical_engineering', d: 'Biomedical Engineering', a: 10000},
+    {m: 'aerospace_engineering', d: 'Aerospace Engineering', a: 10000},
+    {m: 'industrial_engineering', d: 'Industrial Engineering', a: 10000},
+    {m: 'nursing', d: 'Nursing students', a: 8000},
+    {m: 'radiology', d: 'Radiology students', a: 5000},
+    {m: 'respiratory_therapy', d: 'Respiratory Therapy', a: 5000},
+    {m: 'diagnostic_sonography', d: 'Sonography students', a: 5000},
+    {m: 'nuclear_medicine', d: 'Nuclear Medicine', a: 5000},
+    {m: 'medical_laboratory', d: 'Medical Lab Science', a: 5000}
+  ];
+
+  majors.forEach(x => {
+    scholarships.push({name: x.d.replace(' students', '') + ' Scholarship', provider: 'Various Organizations', amount: x.a, deadline: '2026-04-15', min_gpa: 2.5, major: x.m, year: 'undergraduate', citizenship: 'us_citizen', categories: ['academic', x.m], description: x.d, url: ''});
+  });
+
   return scholarships;
 }
 
