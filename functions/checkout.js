@@ -28,14 +28,12 @@ exports.handler = async (event, context) => {
     // Define prices for each tier
     const prices = {
       premium: {
-        priceId: null, // You'll create these in Stripe dashboard
-        amount: 999, // $9.99 in cents
+        amount: 999, // $9.99 one-time
         name: 'ScholarMatch Premium',
         description: 'Unlimited scholarship matches + email alerts'
       },
       complete: {
-        priceId: null,
-        amount: 4999, // $49.99 in cents
+        amount: 4999, // $49.99 one-time
         name: 'ScholarMatch Complete',
         description: 'Everything in Premium + essay review + 1-on-1 coaching'
       }
@@ -62,7 +60,7 @@ exports.handler = async (event, context) => {
           quantity: 1,
         },
       ],
-      mode: 'subscription',
+      mode: 'payment',
       success_url: `${process.env.URL || 'https://scholarmatch.io'}/success.html?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.URL || 'https://scholarmatch.io'}/cancel.html`,
       customer_email: email,
