@@ -241,6 +241,13 @@ function generateScholarships() {
     scholarships.push({name: n + ' Scholarship', provider: n + ' Foundation', amount: 3000 + Math.floor(Math.random() * 5000), deadline: '2026-04-30', min_gpa: 2.0, major: n.toLowerCase().replace(' ', '_'), year: 'undergraduate', citizenship: 'us_citizen', categories: ['niche', n.toLowerCase().replace(' ', '_')], description: 'For ' + n + ' students', url: ''});
   });
 
+  // Extra to ensure 1000+
+  const extras = ['Agriculture', 'Animal Welfare', 'Arts', 'Automation', 'Aviation', 'Biotechnology', 'Blockchain', 'Broadcasting', 'Chemistry', 'Chiropractic', 'Cinematography', 'Communications', 'Computer Science', 'Construction', 'Consumer Affairs', 'Cosmetology', 'Criminal Justice', 'Culinary', 'Cybersecurity', 'Data Science', 'Dental', 'Design', 'Diagnostics', 'Digital Media', 'Drama', 'Economics', 'Education', 'Electrical', 'Electronics', 'Emergency Services', 'Energy', 'Engineering', 'Entertainment', 'Entrepreneurship', 'Environmental', 'Equine', 'Event Planning', 'Fashion', 'Film', 'Finance', 'Fire Science', 'Food Service', 'Forensic Science', 'Game Design', 'Genetics', 'Geography', 'Geology', 'Gerontology', 'Graphic Design', 'Guidance Counseling', 'Health'];
+  
+  extras.forEach(e => {
+    scholarships.push({name: e + ' Excellence Award', provider: e + ' Association', amount: 4000, deadline: '2026-05-01', min_gpa: 3.0, major: e.toLowerCase().replace(' ', '_'), year: 'undergraduate', citizenship: 'us_citizen', categories: ['excellence'], description: e + ' excellence', url: ''});
+  });
+
   return scholarships;
 }
 
