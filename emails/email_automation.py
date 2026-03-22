@@ -150,7 +150,7 @@ The ScholarMatch Team
             {matches_html}
             
             <div style="text-align: center; margin-top: 24px;">
-                <a href="#" style="display: inline-block; background: #6366f1; color: white; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 600;">
+                <a href="https://scholarmatch.io?email={student['email']}" style="display: inline-block; background: #6366f1; color: white; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 600;">
                     View All Matches →
                 </a>
             </div>
